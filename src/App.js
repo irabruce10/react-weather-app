@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 export default function App() {
-  const [weather, setWeather] = useState([]);
+  const [weatherData, setWeather] = useState([]);
   const city = 'linz'; // Replace with your desired city name.
 
   const API_KEY = 'd76570719fb98cbfdad6e5f2fb907ddd';
@@ -23,13 +23,17 @@ export default function App() {
     <div>
       <h1>Hello React Weather App </h1>
 
-      {weather.name}
+      {weatherData.name}
+      {/*
+      {weatherData.weather[0].description} */}
 
-      {weather.weather.map((weather, index) => (
+      {weatherData.coord[0].latitude}
+
+      {/* {weather.weather.map((weather, index) => (
         <p key={index}>
           {weather.description} - {weather.main.temp}°C
         </p>
-      ))}
+      ))} */}
     </div>
   );
 }
