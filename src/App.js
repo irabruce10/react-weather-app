@@ -1,39 +1,50 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
 export default function App() {
-  const [weatherData, setWeather] = useState([]);
-  const city = 'linz'; // Replace with your desired city name.
+  const [weatherData, setWeatherData] = useState(null);
+  const [city, setCity] = useState('Linz');
 
   const API_KEY = 'd76570719fb98cbfdad6e5f2fb907ddd';
 
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
+  const fetchWeatherData = async () => {
+    try {
+      const response = await axios.get(url);
+      setWeatherData(response.data);
+      console.log(response.data);
 
-  const getWeather = async function () {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    setWeather(data);
+      console.log(weatherData);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  fetchWeatherData();
 
-  useEffect(() => {
-    getWeather();
-  }, []);
+  const submitHandle = (event) => {
+    event.preventDefault();
+    console.log('done');
+    fetchWeatherData();
+  };
   return (
     <div>
       <h1>Hello React Weather App </h1>
 
-      {weatherData.name}
-      {/*
-      {weatherData.weather[0].description} */}
-
-      {weatherData.coord[0].latitude}
-
-      {/* {weather.weather.map((weather, index) => (
-        <p key={index}>
-          {weather.description} - {weather.main.temp}°C
-        </p>
-      ))} */}
+      <form onSubmit={submitHandle}>
+        <input
+          placeholder="City"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+        />
+      </form>
+      {weatherData && (
+        <div>
+          <h2>{weatherData.name}</h2>
+          <p>{weatherData.weather[0].description}</p>
+          <p>Temperature: {weatherData.main.temp}</p>
+        </div>
+      )}
     </div>
   );
 }
