@@ -32,18 +32,16 @@ export default function App() {
     getData();
 
     setCity('');
-
-    console.log(weatherData);
   };
 
   // if (!weatherData) {
   //   return <div>Loading.....</div>;
   // }
   return (
-    <div className="app">
+    <div className="App">
       <h1> React Weather App </h1>
 
-      <form onSubmit={submitHandle}>
+      <form onSubmit={submitHandle} className="SearchEngine">
         <input
           placeholder="City"
           value={city}
@@ -53,9 +51,9 @@ export default function App() {
 
       {weatherData ? (
         <div className="weather-info">
-          <h2>{weatherData.name}</h2>
-          <p>Temperature: {weatherData.main.temp}°C</p>
-          <p>Description: {weatherData.weather[0].description}</p>
+          <h2 className="city-name">{weatherData.name}</h2>
+          <p className="temp"> {weatherData.main.temp}°C</p>
+          <p className="weather-des">{weatherData.weather[0].description}</p>
           <p>Feels like : {weatherData.main.feels_like}°C</p>
           <p>Humidity : {weatherData.main.humidity}%</p>
           <p>Pressure : {weatherData.main.pressure}</p>
