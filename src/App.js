@@ -29,6 +29,7 @@ export default function App() {
 
   const submitHandle = (event) => {
     event.preventDefault();
+    getData();
 
     setCity('');
 
@@ -39,8 +40,8 @@ export default function App() {
   //   return <div>Loading.....</div>;
   // }
   return (
-    <div>
-      <h1>Hello React Weather App </h1>
+    <div className="app">
+      <h1> React Weather App </h1>
 
       <form onSubmit={submitHandle}>
         <input
@@ -49,6 +50,20 @@ export default function App() {
           onChange={(e) => setCity(e.target.value)}
         />
       </form>
+
+      {weatherData ? (
+        <div className="weather-info">
+          <h2>{weatherData.name}</h2>
+          <p>Temperature: {weatherData.main.temp}°C</p>
+          <p>Description: {weatherData.weather[0].description}</p>
+          <p>Feels like : {weatherData.main.feels_like}°C</p>
+          <p>Humidity : {weatherData.main.humidity}%</p>
+          <p>Pressure : {weatherData.main.pressure}</p>
+          <p>Wind Speed : {weatherData.wind.speed}m/s</p>
+        </div>
+      ) : (
+        <p className="loading">Loading weather data...</p>
+      )}
     </div>
   );
 }
