@@ -25,7 +25,7 @@ export default function App() {
     getData().catch((error) => {
       console.log(error);
     });
-  });
+  }, []);
 
   const submitHandle = async (event) => {
     event.preventDefault();
