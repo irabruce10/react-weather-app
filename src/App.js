@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import axios from 'axios';
-
-import WeatherGz from './WeatherGz';
 
 export default function App() {
   const [weatherData, setWeatherData] = useState(null);
@@ -12,11 +9,12 @@ export default function App() {
 
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`;
 
+  // useEffect(() => {}, []);
+
   const getData = async () => {
     try {
       const response = await fetch(url);
       const data = await response.json();
-      console.log(weatherData);
 
       setWeatherData(data);
     } catch (error) {
@@ -24,19 +22,18 @@ export default function App() {
     }
   };
   useEffect(() => {
-    getData();
-  }, []);
+    getData().catch((error) => {
+      console.log(error);
+    });
+  });
 
-  const submitHandle = (event) => {
+  const submitHandle = async (event) => {
     event.preventDefault();
-    getData();
+    await getData();
 
     setCity('');
   };
 
-  // if (!weatherData) {
-  //   return <div>Loading.....</div>;
-  // }
   return (
     <div className="App">
       <h1> React Weather App </h1>
